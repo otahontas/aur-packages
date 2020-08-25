@@ -1,7 +1,8 @@
 name: Test building routahe package
-on: [push]
-paths:
-  - 'routahe/**'
+on:
+  push:
+    paths:
+      - 'routahe'
 
 jobs:
   build:
