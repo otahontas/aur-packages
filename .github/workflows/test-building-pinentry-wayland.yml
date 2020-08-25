@@ -1,0 +1,15 @@
+name: Test building pinentry-wayland package
+on:
+  push:
+    paths:
+      - 'pinentry-wayland'
+
+jobs:
+  build:
+    name: Build package from AUR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build routahe package
+        uses: DuckSoft/build-aur-action@master
+        with:
+          repo-name: pinentry-wayland
