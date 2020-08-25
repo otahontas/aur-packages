@@ -1,4 +1,4 @@
-name: Test building pinentry-wayland package
+name: pinentry-wayland
 on:
   push:
     paths:

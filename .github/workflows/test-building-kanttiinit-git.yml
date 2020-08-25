@@ -1,4 +1,4 @@
-name: Test building kanttiinit-git package
+name: kanttiinit-git
 on:
   push:
     paths:
