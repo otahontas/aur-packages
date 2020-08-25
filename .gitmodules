@@ -1,0 +1,9 @@
+[submodule "routahe"]
+	path = routahe
+	url = ssh://aur@aur.archlinux.org/routahe.git
+[submodule "pinentry-wayland"]
+	path = pinentry-wayland
+	url = ssh://aur@aur.archlinux.org/pinentry-wayland.git
+[submodule "kanttiinit-git"]
+	path = kanttiinit-git
+	url = ssh://aur@aur.archlinux.org/kanttiinit-git.git
