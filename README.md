@@ -8,8 +8,8 @@ Repo is also used to test if packages are being built correctly after I've updat
 
 ### Statuses:
 
-![kanttiinit-git](https://github.com/otahontas/aur-packages/workflows/Test%20building%20kanttiinit-git%20package/badge.svg)
+![kanttiinit-git](https://github.com/otahontas/aur-packages/workflows/kanttiinit-git/badge.svg)
 
-![pinentry-wayland](https://github.com/otahontas/aur-packages/workflows/Test%20building%20pinentry-wayland%20package/badge.svg)
+![pinentry-wayland](https://github.com/otahontas/aur-packages/workflows/pinentry-wayland/badge.svg)
 
-![routahe](https://github.com/otahontas/aur-packages/workflows/Test%20building%20routahe%20package/badge.svg)
+![routahe](https://github.com/otahontas/aur-packages/workflows/routahe/badge.svg)
