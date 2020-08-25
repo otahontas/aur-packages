@@ -1,0 +1,14 @@
+name: Test building routahe package
+on: [push]
+paths:
+  - 'routahe/**'
+
+jobs:
+  build:
+    name: Build package from AUR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build routahe package
+        uses: DuckSoft/build-aur-action@master
+        with:
+          repo-name: routahe
