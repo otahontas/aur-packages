@@ -7,3 +7,6 @@
 [submodule "edgedb-cli"]
 	path = edgedb-cli
 	url = ssh://aur@aur.archlinux.org/edgedb-cli.git
+[submodule "expo-cli"]
+	path = expo-cli
+	url = ssh://aur@aur.archlinux.org/expo-cli.git

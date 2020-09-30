@@ -1,0 +1,15 @@
+name: expo-cli
+on:
+  push:
+    paths:
+      - 'expo-cli'
+
+jobs:
+  build:
+    name: Build package from AUR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build expo-cli package
+        uses: DuckSoft/build-aur-action@master
+        with:
+          repo-name: expo-cli
