@@ -1,15 +1,15 @@
-name: kanttiinit-git
+name: edgedb-cli
 on:
   push:
     paths:
-      - 'kanttiinit-git'
+      - 'edgedb-cli'
 
 jobs:
   build:
     name: Build package from AUR
     runs-on: ubuntu-latest
     steps:
-      - name: Build kanttiinit-git package
+      - name: Build edgedb-cli package
         uses: DuckSoft/build-aur-action@master
         with:
-          repo-name: kanttiinit-git
+          repo-name: edgedb-cli
