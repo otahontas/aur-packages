@@ -8,6 +8,8 @@ Repo is also used to test if packages are being built correctly after I've updat
 
 ### Statuses:
 
+![edgedb-cli](https://github.com/otahontas/aur-packages/workflows/edgedb-cli/badge.svg)
+
 ![kanttiinit-git](https://github.com/otahontas/aur-packages/workflows/kanttiinit-git/badge.svg)
 
 ![routahe](https://github.com/otahontas/aur-packages/workflows/routahe/badge.svg)
