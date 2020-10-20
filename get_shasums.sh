@@ -31,4 +31,4 @@ case $number in
 esac
 
 echo "Getting sha512sums for $name, v. $pkgver"
-curl --output - $url | sha512sum -
+curl -L --output - $url | sha512sum -
