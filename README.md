@@ -15,3 +15,9 @@ Repo is also used to test if packages are being built correctly after I've updat
 ![kanttiinit-git](https://github.com/otahontas/aur-packages/workflows/kanttiinit-git/badge.svg)
 
 ![routahe](https://github.com/otahontas/aur-packages/workflows/routahe/badge.svg)
+
+## TODO / Notes
+
+Repo currently tests package building after they've been published to AUR. This of course should be other way around. Two thing should done:
+- add webhook checks for new releases for different packages
+- add action (triggered by webook) that gets new release, builds new pkgbuild, tests it and if everything goes well, pushes new version to aur
