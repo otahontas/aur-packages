@@ -2,7 +2,7 @@
 
 This repo contains all the PKGBUILDS for [aur packages I maintain](https://aur.archlinux.org/packages/?SeB=m&K=otahontas).
 
-## Tests
+## Tests in github
 
 Repo is also used to test if packages are being built correctly after I've updated them in AUR. Thanks to [Build AUR Package](https://github.com/marketplace/actions/build-aur-package) Github action for making this easy!
 
@@ -16,8 +16,11 @@ Repo is also used to test if packages are being built correctly after I've updat
 
 ![routahe](https://github.com/otahontas/aur-packages/workflows/routahe/badge.svg)
 
-## TODO / Notes
+## Autoupdating and testing
 
-Repo currently tests package building after they've been published to AUR. This of course should be other way around. Two thing should done:
-- add webhook checks for new releases for different packages
-- add action (triggered by webook) that gets new release, builds new pkgbuild, tests it and if everything goes well, pushes new version to aur
+`auto_updater.py` (currently handling only expo-cli updates) checks for new program versions. If there's  a newer version available, it writes new PKGBUILD file, builds new version inside Docker and finally pushes PKGBUILD to aur repo and this github repo.
+
+Script runs as cron job on my personal server. For building and testing PKGBUILD inside docker, I'm using [aur-pkgbuild-tester](https://github.com/Stunkymonkey/aur-pkgbuild-tester). 
+
+## TODO
+- Move auto_updater to github actions, so everything is in the same place
