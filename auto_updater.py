@@ -7,21 +7,24 @@ from functools import reduce
 from operator import getitem
 from pathlib import Path
 from string import Template
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, Final
 
 import requests
 from packaging import version
 from packaging.version import LegacyVersion, Version
 
+# Set up logging
 FORMAT = "[%(asctime)s][%(process)d %(processName)s][%(levelname)-4s] (L:%(lineno)s) %(funcName)s: %(message)s"
 logging.basicConfig(format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
-LOG = logging.getLogger(__name__)
+LOG: Final = logging.getLogger(__name__)
 LOG.setLevel(logging.INFO)
 
+# Custom types and other
 Vers = Union[LegacyVersion, Version]
-
-
 Package = namedtuple("Package", ["name", "info_url", "version_path", "latest_package"])
+
+# Constants
+SCRIPT_FOLDER: Final = Path(__file__).parent
 
 
 def recursively_get_value(data: Any, path: list[str]) -> str:
@@ -31,8 +34,8 @@ def recursively_get_value(data: Any, path: list[str]) -> str:
 
 def get_current_version(package: Package) -> Optional[Vers]:
     """Get current package version from PKGBUILD file."""
-    current_pkgbuild = Path(".") / package.name / "PKGBUILD"
-    with current_pkgbuild.open() as file:
+    pkgbuild_path = SCRIPT_FOLDER / package.name / "PKGBUILD"
+    with pkgbuild_path.open() as file:
         try:
             return version.parse(
                 next(
@@ -51,9 +54,10 @@ def get_latest_version(package: Package) -> Optional[Vers]:
 
 def get_shasum_for_latest_package(package: Package, latest_version: Vers) -> str:
     """Download newest package and calculate its checksum."""
+    CHUNK_SIZE: Final = 8192
     file = requests.get(package.latest_package(latest_version))
     message = hashlib.sha512()
-    for data in file.iter_content(8192):  # iter by chunks of 8kB
+    for data in file.iter_content(CHUNK_SIZE):
         message.update(data)
     return message.hexdigest()
 
@@ -61,7 +65,7 @@ def get_shasum_for_latest_package(package: Package, latest_version: Vers) -> str
 def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     """Create new PKGBUILD by substituting stuff in template, then write it to file."""
     LOG.info(f"Creating pkgbuild")
-    template = Path(".") / "PKGBUILD_templates" / package.name
+    template = SCRIPT_FOLDER / "PKGBUILD_templates" / package.name
     replacements = {
         "latest_pkgver": latest_version,
         "latest_shasum": get_shasum_for_latest_package(package, latest_version),
@@ -69,8 +73,8 @@ def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     with template.open() as file:
         pkgbuild = Template(file.read()).substitute(replacements)
 
-    path = Path(".") / package.name / "PKGBUILD"
-    path.write_text(pkgbuild)
+    pkgbuild_path = SCRIPT_FOLDER / package.name / "PKGBUILD"
+    pkgbuild_path.write_text(pkgbuild)
 
 
 def run_docker_tests(package: Package) -> None:
@@ -100,7 +104,7 @@ def run_git_operations(package: Package, latest_version: Vers) -> None:
             ),
             shell=True,
             check=True,
-            cwd=Path(".") / package.name,
+            cwd=SCRIPT_FOLDER / package.name,
         )
     except subprocess.CalledProcessError as error:
         logging.error(
@@ -119,7 +123,7 @@ def run_git_operations(package: Package, latest_version: Vers) -> None:
             ),
             shell=True,
             check=True,
-            cwd=Path("."),
+            cwd=SCRIPT_FOLDER,
         )
     except subprocess.CalledProcessError as error:
         logging.error(
