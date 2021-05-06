@@ -86,7 +86,19 @@ def main() -> None:
             "https://registry.npmjs.org/expo-cli",
             ["dist-tags", "latest"],
             lambda version: f"https://registry.npmjs.org/expo-cli/-/expo-cli-{version}.tgz",
-        )
+        ),
+        Package(
+            "edgedb-cli",
+            "https://api.github.com/repos/edgedb/edgedb-cli/tags",
+            [0, "name", ":-1"],
+            lambda version: f"https://github.com/edgedb/edgedb-cli/archive/v{version}.tar.gz",
+        ),
+        Package(
+            "routahe",
+            "https://registry.npmjs.org/routahe",
+            ["dist-tags", "latest"],
+            lambda version: f"https://registry.npmjs.org/routahe/-/routahe-{version}.tgz",
+        ),
     ]
     for package in packages:
         LOG.info(f"Checking updates for {package.name}")
