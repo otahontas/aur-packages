@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import hashlib
 import logging
-import subprocess
 from collections import namedtuple
 from functools import reduce
 from operator import getitem
@@ -76,64 +75,12 @@ def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     pkgbuild_path = SCRIPT_FOLDER / package.name / "PKGBUILD"
     pkgbuild_path.write_text(pkgbuild)
 
-
-def run_docker_tests(package: Package) -> None:
-    """Run docker tests with external script."""
-    LOG.info(f"Running tests in docker")
-    try:
-        subprocess.run(
-            f"./aur-pkgbuild-tester.sh {package.name}", shell=True, check=True
-        )
-    except subprocess.CalledProcessError as error:
-        logging.error(
-            f"Wasn't able to build {package.name} with newest PKGBUILD, "
-            f"more details: {error}"
-        )
-        return
-
-
-def run_git_operations(package: Package, latest_version: Vers) -> None:
-    """Add, commit and push submodule and main folder. Also cleanup submodule."""
-    try:
-        subprocess.run(
-            (
-                "git add . && "
-                f'git commit -m "Bump version to {latest_version}" && '
-                "git clean -xfd && "
-                "git push origin master"
-            ),
-            shell=True,
-            check=True,
-            cwd=SCRIPT_FOLDER / package.name,
-        )
-    except subprocess.CalledProcessError as error:
-        logging.error(
-            f"Wasn't able to run git commands for {package.name} submodule, "
-            f"more details: {error}"
-        )
-        return
-
-    # Git add, commit and push main repo
-    try:
-        subprocess.run(
-            (
-                "git add expo-cli && "
-                f'git commit -m "Bump {package.name} version to {latest_version}" && '
-                "git push origin master"
-            ),
-            shell=True,
-            check=True,
-            cwd=SCRIPT_FOLDER,
-        )
-    except subprocess.CalledProcessError as error:
-        logging.error(
-            "Wasn't able to run git commands for main repo, " f"more details: {error}"
-        )
-        return
+    print("PKGBUILD that was written")
+    print(pkgbuild)
 
 
 def main() -> None:
-    LOG.info("Starting auto updater")
+    LOG.info("Starting updater")
     packages = [
         Package(
             "expo-cli",
@@ -160,10 +107,7 @@ def main() -> None:
             continue
         LOG.info(f"Updating to {latest_version}")
 
-        create_new_pkgbuild(package, latest_version)
-        run_docker_tests(package)
-        run_git_operations(package, latest_version)
-        LOG.info(f"Succesfully updated!")
+    LOG.info("Finished")
 
 
 if __name__ == "__main__":
