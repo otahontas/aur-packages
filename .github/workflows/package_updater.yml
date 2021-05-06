@@ -5,10 +5,11 @@ on:
 
 jobs:
   update_packages:
-    name: Check for package updates, update if needed
+    name: Update packages
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository and submodules
       uses: actions/checkout@v2
       with:
         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        submodules: 'recursive'
