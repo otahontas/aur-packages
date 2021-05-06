@@ -13,12 +13,6 @@ case $number in
     read pkgver
     url=https://github.com/edgedb/edgedb-cli/archive/v$pkgver.tar.gz
     ;;
-  2)
-    name="expo-cli"
-    echo "Give pgkver: "
-    read pkgver
-    url=https://registry.npmjs.org/expo-cli/-/expo-cli-$pkgver.tgz
-    ;;
   3)
     name="routahe"
     echo "Give pgkver: "
