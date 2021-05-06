@@ -8,7 +8,9 @@ jobs:
     name: Update packages
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository and submodules
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Checkout submodules
       uses: actions/checkout@v2
       with:
         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
