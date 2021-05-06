@@ -12,5 +12,5 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-        ssh-known-hosts: 'aur.archlinux.org'
+        ssh-known-hosts: 'ssh-keyscan aur.archlinux.org'
         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
