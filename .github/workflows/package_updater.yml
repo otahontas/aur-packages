@@ -8,10 +8,9 @@ jobs:
     name: Update packages
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Checkout submodules
+    - name: Checkout repository and submodules
       uses: actions/checkout@v2
       with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
         submodules: 'recursive'
+        ssh-known-hosts: 'aur.archlinux.org'
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
