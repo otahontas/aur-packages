@@ -90,7 +90,7 @@ def main() -> None:
         Package(
             "edgedb-cli",
             "https://api.github.com/repos/edgedb/edgedb-cli/tags",
-            [0, "name", ":-1"],
+            [0, "name"],
             lambda version: f"https://github.com/edgedb/edgedb-cli/archive/v{version}.tar.gz",
         ),
         Package(
