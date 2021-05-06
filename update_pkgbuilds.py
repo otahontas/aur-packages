@@ -5,7 +5,7 @@ from functools import reduce
 from operator import getitem
 from pathlib import Path
 from string import Template
-from typing import Any, Optional, Union, Final
+from typing import Any, Optional, Union, Final, List
 
 import requests
 from packaging import version
@@ -25,7 +25,7 @@ Package = namedtuple("Package", ["name", "info_url", "version_path", "latest_pac
 SCRIPT_FOLDER: Final = Path(__file__).parent
 
 
-def recursively_get_value(data: Any, path: list[str]) -> str:
+def recursively_get_value(data: Any, path: List[str]) -> str:
     """Walk given path on data, return value."""
     return str(reduce(getitem, path, data))
 
