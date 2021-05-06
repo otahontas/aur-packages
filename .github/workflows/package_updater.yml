@@ -1,11 +1,13 @@
-name: Update packages
+name: Update packages on schedule or manually
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * 1,5'
 
 jobs:
   update_packages:
-    name: Update packages
+    name: Run updater and tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository and submodules
