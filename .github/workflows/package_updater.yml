@@ -1,0 +1,16 @@
+name: Update packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_packages:
+    name: Check for package updates, update if needed
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@master
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+    - name: Test action
+      run: echo "Hello world!" 
