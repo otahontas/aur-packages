@@ -7,8 +7,10 @@ This repo handles automatic updates for non-git-based
 Updates are done via github actions ([check out workflows](https://github.com/otahontas/aur-packages/actions
 )).
 
-## Statuses:
+## Workflow statuses:
 
-- [![edgedb-cli](https://github.com/otahontas/aur-packages/actions/workflows/update_edgedb-cli.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_edgedb-cli.yml)
-- [![expo-cli](https://github.com/otahontas/aur-packages/actions/workflows/update_expo_cli.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_expo_cli.yml)
-- [![routahe](https://github.com/otahontas/aur-packages/actions/workflows/update_routahe.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_routahe.yml)
+[![edgedb-cli](https://github.com/otahontas/aur-packages/actions/workflows/update_edgedb-cli.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_edgedb-cli.yml)
+
+[![expo-cli](https://github.com/otahontas/aur-packages/actions/workflows/update_expo_cli.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_expo_cli.yml)
+
+[![routahe](https://github.com/otahontas/aur-packages/actions/workflows/update_routahe.yml/badge.svg)](https://github.com/otahontas/aur-packages/actions/workflows/update_routahe.yml)
