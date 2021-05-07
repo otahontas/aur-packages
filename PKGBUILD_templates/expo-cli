@@ -12,7 +12,7 @@ makedepends=("jq" "npm")
 optdepends=()
 source=("$$pkgname-$$pkgver.tar.gz::https://registry.npmjs.org/$$pkgname/-/$$pkgname-$$pkgver.tgz")
 noextract=("$$pkgname-$$pkgver.tar.gz")
-sha512sums=("$$latest_shasum")
+sha512sums=("$latest_shasum")
 
 package() {
   npm install -g --cache "$$srcdir/npm-cache" --prefix "$$pkgdir/usr" "$$srcdir/$$pkgname-$$pkgver.tar.gz"
