@@ -6,8 +6,8 @@ on:
     - cron: '0 5 * * 1,5'
 
 jobs:
-  update_packages:
-    name: Run updater and tests
+  update_expo_cli:
+    name: Update expo-cli
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository and submodules
@@ -24,4 +24,5 @@ jobs:
       run: python -m pip install --upgrade pip requests packaging
     - name: Run updater script
       run: python update_pkgbuilds.py expo-cli
-    - 
+    - name: Run tests for PKGBUILD
+      run: test_pkgbuild.sh expo-cli
