@@ -119,6 +119,7 @@ def main() -> None:
             LOG.info("No updates")
             continue
         LOG.info(f"Updating to {latest_version}")
+        create_new_pkgbuild(package, latest_version)
 
     LOG.info("Finished")
 
