@@ -1,9 +1,9 @@
-name: Update packages on schedule or manually
+name: Update expo-cli
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * 1,5'
+    - cron: '0 5 * * 0'
 
 jobs:
   update_expo_cli:
