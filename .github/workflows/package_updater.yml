@@ -25,4 +25,4 @@ jobs:
     - name: Run updater script
       run: python update_pkgbuilds.py expo-cli
     - name: Run tests for PKGBUILD
-      run: test_pkgbuild.sh expo-cli
+      run: ./test_pkgbuild.sh expo-cli
