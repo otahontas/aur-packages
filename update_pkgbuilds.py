@@ -1,5 +1,6 @@
 import hashlib
 import logging
+import sys
 from collections import namedtuple
 from functools import reduce
 from operator import getitem
@@ -23,6 +24,26 @@ Package = namedtuple("Package", ["name", "info_url", "version_path", "latest_pac
 
 # Constants
 SCRIPT_FOLDER: Final = Path(__file__).parent
+PACKAGES = {
+    "expo-cli": Package(
+        "expo-cli",
+        "https://registry.npmjs.org/expo-cli",
+        ["dist-tags", "latest"],
+        lambda version: f"https://registry.npmjs.org/expo-cli/-/expo-cli-{version}.tgz",
+    ),
+    "edgedb-cli": Package(
+        "edgedb-cli",
+        "https://api.github.com/repos/edgedb/edgedb-cli/tags",
+        [0, "name"],
+        lambda version: f"https://github.com/edgedb/edgedb-cli/archive/v{version}.tar.gz",
+    ),
+    "routahe": Package(
+        "routahe",
+        "https://registry.npmjs.org/routahe",
+        ["dist-tags", "latest"],
+        lambda version: f"https://registry.npmjs.org/routahe/-/routahe-{version}.tgz",
+    ),
+}
 
 
 def recursively_get_value(data: Any, path: List[str]) -> str:
@@ -81,43 +102,27 @@ def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
 
 
 def main() -> None:
-    LOG.info("Starting updater")
-    packages = [
-        Package(
-            "expo-cli",
-            "https://registry.npmjs.org/expo-cli",
-            ["dist-tags", "latest"],
-            lambda version: f"https://registry.npmjs.org/expo-cli/-/expo-cli-{version}.tgz",
-        ),
-        Package(
-            "edgedb-cli",
-            "https://api.github.com/repos/edgedb/edgedb-cli/tags",
-            [0, "name"],
-            lambda version: f"https://github.com/edgedb/edgedb-cli/archive/v{version}.tar.gz",
-        ),
-        Package(
-            "routahe",
-            "https://registry.npmjs.org/routahe",
-            ["dist-tags", "latest"],
-            lambda version: f"https://registry.npmjs.org/routahe/-/routahe-{version}.tgz",
-        ),
-    ]
-    for package in packages:
-        LOG.info(f"Checking updates for {package.name}")
+    if len(sys.argv) != 2:
+        raise ValueError(f"Usage: {sys.argv[0]} package_name")
 
-        current_version = get_current_version(package)
-        if not current_version:
-            LOG.error("Current version cannot be empty!")
-            continue
+    package_name = sys.argv[1]
+    if package_name not in PACKAGES.keys():
+        raise ValueError(f"{package_name} is not a valid package")
 
-        latest_version = get_latest_version(package)
-        if not latest_version:
-            LOG.error("Latest version cannot be empty!")
-            continue
+    package = PACKAGES[package_name]
+    LOG.info(f"Checking updates for {package.name}")
 
-        if latest_version == current_version:
-            LOG.info("No updates")
-            continue
+    current_version = get_current_version(package)
+    if not current_version:
+        raise ValueError("Current version cannot be empty!")
+
+    latest_version = get_latest_version(package)
+    if not latest_version:
+        raise ValueError("Latest version cannot be empty!")
+
+    if latest_version == current_version:
+        LOG.info("No updates")
+    else:
         LOG.info(f"Updating to {latest_version}")
         create_new_pkgbuild(package, latest_version)
 
