@@ -35,3 +35,14 @@ jobs:
         target: 'run'
         pkgname: 'expo-cli'
         command: 'expo-cli --version'
+    - name: Publish AUR package
+      uses: KSXGitHub/github-actions-deploy-aur@2.2.4
+      with:
+        pkgname: 'expo-cli'
+        pkgbuild: 'expo-cli/PKGBUILD'
+        commit_username: 'otahontasupdater'
+        commit_email: 'aurupdater@ottoahoniemi.fi'
+        commit_message: "Bump version"
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        allow_empty_commits: false
+        ssh_keyscan_types: rsa,dsa,ecdsa,ed25519
