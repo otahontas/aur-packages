@@ -74,8 +74,10 @@ def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     pkgbuild_path = SCRIPT_FOLDER / package.name / "PKGBUILD"
     pkgbuild_path.write_text(pkgbuild)
 
-    print("PKGBUILD that was written")
-    print(pkgbuild)
+    LOG.info("PKGBUILD that was written")
+    LOG.info(pkgbuild)
+    LOG.error("exiting")
+    exit(1)
 
 
 def main() -> None:
