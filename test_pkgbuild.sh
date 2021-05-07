@@ -1,22 +1,16 @@
-#!/usr/bin/env bash
-set -e
-DATADIR="$(readlink -f "$1")"
-TESTER=$(readlink -f scripts/default-noop-tester.sh)
-if [ -n "$2" ]; then
-    TESTER="$(readlink -f "$2")"
-fi
-if [ ! -d "$DATADIR" ]; then
-    echo "First argument must be a directory"
-    exit 1
-fi
+#!/usr/bin/env sh
 
-if [ -d "$TESTER" ]; then
-    echo "Second argument must not be a directory"
-    exit 1
-fi
-docker run --rm -it \
-    -v "$DATADIR/:/opt/pkgdir" \
-    -v "$TESTER:/opt/test.sh" \
-    -v "$(pwd)/pkgbuild_tester_scripts:/opt/scripts" \
-    archlinux:base-devel \
-    /opt/scripts/entrypoint.sh
+# Fail on error
+set -e
+
+# Read srcdir argument
+SRCDIR="$(readlink -f "$1")"
+
+# Create user
+useradd -m -g wheel -s /bin/sh tester
+echo "tester ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+chown -R tester:wheel "/github/workspace/$SRCDIR"
+
+# Run makepkg
+cd /github/workspace/expo-cli
+makepkg -srci
