@@ -1,0 +1,48 @@
+name: Update edgedb-cli
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * 0'
+
+jobs:
+  update_edgedb_cli:
+    name: Update edgedb-cli
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        ssh-known-hosts: 'aur.archlinux.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLMiLrP8pVi5BFX2i3vepSUnpedeiewE5XptnUnau+ZoeUOPkpoCgZZuYfpaIQfhhJJI5qgnjJmr4hyJbe/zxow='
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Set up python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install deps
+      run: python -m pip install --upgrade pip requests packaging
+    - name: Check for updates and update PKGBUILD if there's an update available
+      run: python update_pkgbuilds.py edgedb-cli
+    - name: Test package can be built
+      uses: 2m/arch-pkgbuild-builder@v1.16
+      with:
+        target: 'pkgbuild'
+        pkgname: 'edgedb-cli'
+    - name: Test installed package is ok
+      uses: 2m/arch-pkgbuild-builder@v1.16
+      with:
+        target: 'run'
+        pkgname: 'edgedb-cli'
+        command: 'edgedb --version'
+    - name: Publish AUR package
+      uses: KSXGitHub/github-actions-deploy-aur@2.2.4
+      with:
+        pkgname: 'edgedb-cli'
+        pkgbuild: 'edgedb-cli/PKGBUILD'
+        commit_username: 'otahontasupdater'
+        commit_email: 'aurupdater@ottoahoniemi.fi'
+        commit_message: "Bump version"
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        allow_empty_commits: false
+        ssh_keyscan_types: rsa,dsa,ecdsa,ed25519
