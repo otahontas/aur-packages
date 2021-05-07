@@ -23,4 +23,5 @@ jobs:
     - name: Install deps
       run: python -m pip install --upgrade pip requests packaging
     - name: Run updater script
-      run: python update_pkgbuilds.py
+      run: python update_pkgbuilds.py expo-cli
+    - 

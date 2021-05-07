@@ -83,7 +83,7 @@ def get_shasum_for_latest_package(package: Package, latest_version: Vers) -> str
 
 def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     """Create new PKGBUILD by substituting stuff in template, then write it to file."""
-    LOG.info(f"Creating pkgbuild")
+    LOG.info(f"Creating PKGBUILD")
     template = SCRIPT_FOLDER / "PKGBUILD_templates" / package.name
     replacements = {
         "latest_pkgver": latest_version,
@@ -94,11 +94,6 @@ def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
 
     pkgbuild_path = SCRIPT_FOLDER / package.name / "PKGBUILD"
     pkgbuild_path.write_text(pkgbuild)
-
-    LOG.info("PKGBUILD that was written")
-    LOG.info(pkgbuild)
-    LOG.error("exiting")
-    exit(1)
 
 
 def main() -> None:
