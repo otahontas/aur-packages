@@ -36,7 +36,7 @@ jobs:
         pkgname: 'expo-cli'
         command: 'expo-cli --version'
     - name: Publish AUR package
-      uses: KSXGitHub/github-actions-deploy-aur@2.2.4
+      uses: KSXGitHub/github-actions-deploy-aur@v2.2.4
       with:
         pkgname: 'expo-cli'
         pkgbuild: 'expo-cli/PKGBUILD'
