@@ -1,6 +1,7 @@
 import hashlib
 import logging
 import sys
+import os
 from collections import namedtuple
 from functools import reduce
 from operator import getitem
@@ -116,10 +117,11 @@ def main() -> None:
         raise ValueError("Latest version cannot be empty!")
 
     if latest_version == current_version:
-        LOG.info("::set-output name=status::No updates")
+        LOG.info("No updates")
     else:
-        LOG.info(f"::set-output name=status::Updating to {latest_version}")
+        LOG.info(f"Updating to {latest_version}")
         create_new_pkgbuild(package, latest_version)
+        os.environ["UPDATE_AVAILABLE"] = "TRUE"
 
     LOG.info("Finished")
 
