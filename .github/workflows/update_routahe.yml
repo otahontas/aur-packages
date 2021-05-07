@@ -10,12 +10,10 @@ jobs:
     name: Update routahe
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository and submodules
+    - name: Checkout this repository
       uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
-        ssh-known-hosts: 'aur.archlinux.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLMiLrP8pVi5BFX2i3vepSUnpedeiewE5XptnUnau+ZoeUOPkpoCgZZuYfpaIQfhhJJI5qgnjJmr4hyJbe/zxow='
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Clone repo from AUR
+      run: git clone https://aur.archlinux.org/routahe.git
     - name: Set up python
       uses: actions/setup-python@v2
       with:
