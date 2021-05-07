@@ -23,18 +23,21 @@ jobs:
     - name: Install deps
       run: python -m pip install --upgrade pip requests packaging
     - name: Check for updates and update PKGBUILD if there's an update available
+      id: update_check
       run: python update_pkgbuilds.py routahe
     - name: Test package can be built
       uses: 2m/arch-pkgbuild-builder@v1.16
       with:
         target: 'pkgbuild'
         pkgname: 'routahe'
+      if: ${{ steps.update_check.outputs.status != 'No updates' }}
     - name: Test installed package is ok
       uses: 2m/arch-pkgbuild-builder@v1.16
       with:
         target: 'run'
         pkgname: 'routahe'
         command: 'routahe'
+      if: ${{ steps.update_check.outputs.status != 'No updates' }}
     - name: Publish AUR package
       uses: KSXGitHub/github-actions-deploy-aur@v2.2.4
       with:
@@ -46,3 +49,4 @@ jobs:
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         allow_empty_commits: false
         ssh_keyscan_types: rsa,dsa,ecdsa,ed25519
+      if: ${{ steps.update_check.outputs.status != 'No updates' }}

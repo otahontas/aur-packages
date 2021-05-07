@@ -116,9 +116,9 @@ def main() -> None:
         raise ValueError("Latest version cannot be empty!")
 
     if latest_version == current_version:
-        LOG.info("No updates")
+        LOG.info("::set-output name=status::No updates")
     else:
-        LOG.info(f"Updating to {latest_version}")
+        LOG.info(f"::set-output name=status::Updating to {latest_version}")
         create_new_pkgbuild(package, latest_version)
 
     LOG.info("Finished")
