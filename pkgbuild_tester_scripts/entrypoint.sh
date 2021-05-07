@@ -9,8 +9,6 @@ cd /opt/pkgdir
 rm -f *.tar.zst
 # Install makepkg deps
 pacman -Sy git --noconfirm
-# install yay
-su - tester /opt/scripts/install-yay.sh
 # install dependencies
 su - tester /opt/scripts/install-dependencies.sh
 # Build the package as `tester' user

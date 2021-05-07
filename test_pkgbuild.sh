@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
-DATADIR=$(readlink -f $1)
+DATADIR="$(readlink -f "$1")"
 TESTER=$(readlink -f scripts/default-noop-tester.sh)
-if [ ! -z "$2" ]; then
-    TESTER=$(readlink -f $2)
+if [ -n "$2" ]; then
+    TESTER="$(readlink -f "$2")"
 fi
 if [ ! -d "$DATADIR" ]; then
     echo "First argument must be a directory"
@@ -17,6 +17,6 @@ fi
 docker run --rm -it \
     -v "$DATADIR/:/opt/pkgdir" \
     -v "$TESTER:/opt/test.sh" \
-    -v "$(pwd)/scripts:/opt/scripts" \
+    -v "$(pwd)/pkgbuild_tester_scripts:/opt/scripts" \
     archlinux:base-devel \
     /opt/scripts/entrypoint.sh
