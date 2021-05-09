@@ -121,7 +121,8 @@ def main() -> None:
     else:
         LOG.info(f"Updating to {latest_version}")
         create_new_pkgbuild(package, latest_version)
-        os.environ["UPDATE_AVAILABLE"] = "TRUE"
+        # Set output to run next steps in GH actions workflow
+        print("::set-output name=pkgbuild_updated::true")
 
     LOG.info("Finished")
 
