@@ -8,17 +8,22 @@ arch=("x86_64")
 url="https://github.com/edgedb/edgedb-cli"
 license=("MIT" "APACHE")
 makedepends=("rust" "cargo")
-source=("$$url/archive/v$$pkgver.tar.gz")
+source=("$$pkgname-$$pkgver.tar.gz::$$url/archive/v$$pkgver.tar.gz")
 sha512sums=("$latest_shasum")
 
 build() {
   cd $$pkgname-$$pkgver
-  cargo build --release --target-dir "target/"
+  RUSTUP_TOOLCHAIN=stable cargo build --release --locked --all-features --target-dir=target
+}
+
+check() {
+  cd $$pkgname-$$pkgver
+  RUSTUP_TOOLCHAIN=stable cargo test
 }
 
 package() {
   cd $$pkgname-$$pkgver
-  install -D target/release/edgedb -t "$$pkgdir"/usr/bin
+  install -Dm target/release/edgedb -t "$$pkgdir"/usr/bin
   install -Dm 644 README.md -t "$$pkgdir"/usr/share/doc/$$pkgname
   install -Dm 644 LICENSE-MIT -t "$$pkgdir"/usr/share/licenses/$$pkgname
   install -Dm 644 LICENSE-APACHE -t "$$pkgdir"/usr/share/licenses/$$pkgname
