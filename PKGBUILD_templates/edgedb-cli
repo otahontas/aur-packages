@@ -7,7 +7,7 @@ pkgdesc="Command-line tools for edgedb"
 arch=("x86_64")
 url="https://github.com/edgedb/edgedb-cli"
 license=("MIT" "APACHE")
-makedepends=("rust" "cargo" "zsh")
+makedepends=("rust" "cargo" "zsh" "bash")
 source=("$$pkgname-$$pkgver.tar.gz::$$url/archive/v$$pkgver.tar.gz")
 sha512sums=("$latest_shasum")
 
