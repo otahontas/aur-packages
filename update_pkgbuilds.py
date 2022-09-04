@@ -1,7 +1,6 @@
 import hashlib
 import logging
 import sys
-import os
 from collections import namedtuple
 from functools import reduce
 from operator import getitem
@@ -84,7 +83,7 @@ def get_shasum_for_latest_package(package: Package, latest_version: Vers) -> str
 
 def create_new_pkgbuild(package: Package, latest_version: Vers) -> None:
     """Create new PKGBUILD by substituting stuff in template, then write it to file."""
-    LOG.info(f"Creating PKGBUILD")
+    LOG.info("Creating PKGBUILD")
     template = SCRIPT_FOLDER / "PKGBUILD_templates" / package.name
     replacements = {
         "latest_pkgver": latest_version,
